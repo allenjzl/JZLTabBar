@@ -9,8 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface JZLTabBarItem : UIView
+/** 标题 */
 @property (nonatomic, strong) UILabel *titleLbl;
+/** 图片 */
 @property (nonatomic, strong) UIImageView *imgView;
+/** 选中的图片 */
 @property (nonatomic, strong) UIImageView *selectedImgView;
+/** 角标 */
+@property (nonatomic, strong) UILabel *badgeLbl;
 @property (nonatomic, assign) BOOL selected;
 @end

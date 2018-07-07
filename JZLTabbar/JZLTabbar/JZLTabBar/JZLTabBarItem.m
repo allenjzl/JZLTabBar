@@ -7,7 +7,7 @@
 //
 
 #import "JZLTabBarItem.h"
-#import "Masonry.h"
+
 
 @implementation JZLTabBarItem
 
@@ -24,25 +24,14 @@
     [self addSubview:self.titleLbl];
     [self addSubview:self.imgView];
     [self addSubview:self.selectedImgView];
+    [self addSubview:self.badgeLbl];
+    self.imgView.frame = CGRectMake(0, 0, 21.5, 22);
+    self.imgView.center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2 - 5);
+    self.titleLbl.frame = CGRectMake(0, self.bounds.size.height - 12, self.bounds.size.width, 12);
+    self.selectedImgView.frame = CGRectMake(0, 0, 32, 32);
+    self.selectedImgView.center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2 );
+    self.badgeLbl.center = CGPointMake((CGRectGetMaxX(self.imgView.frame) - 5), (self.imgView.bounds.origin.y) + 5);
 
-    
-    [self.titleLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(self);
-        make.bottom.mas_equalTo(self);
-        make.left.mas_equalTo(self);
-    }];
-    
-    [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(self);
-        make.bottom.mas_equalTo(self.titleLbl.mas_top).mas_offset(-5);
-        make.width.mas_equalTo(21.5);
-        make.height.mas_equalTo(22);
-    }];
-    
-    [self.selectedImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.mas_equalTo(self);
-        make.width.height.mas_equalTo(32);
-    }];
     
 }
 
@@ -61,6 +50,7 @@
     
 }
 
+/** 动画 */
 - (void)animationWithSelectedImg {
     CABasicAnimation*pulse = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     pulse.timingFunction= [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -88,6 +78,7 @@
         _imgView = [[UIImageView alloc] init];
         _imgView.userInteractionEnabled = YES;
         
+        
     }
     return _imgView;
 }
@@ -97,10 +88,54 @@
         _selectedImgView = [[UIImageView alloc] init];
         _selectedImgView.userInteractionEnabled = YES;
         _selectedImgView.hidden = YES;//选中图片默认隐藏
-        
     }
     return _selectedImgView;
 }
 
+- (UILabel *)badgeLbl {
+    if (!_badgeLbl) {
+        _badgeLbl = [[UILabel alloc] init];
+        _badgeLbl.font = [UIFont systemFontOfSize:12];
+        _badgeLbl.textColor = [UIColor whiteColor];
+        _badgeLbl.textAlignment = NSTextAlignmentCenter;
+        _badgeLbl.hidden = YES;
+        _badgeLbl.backgroundColor = [UIColor redColor];
+
+    }
+    return _badgeLbl;
+}
+
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    [self.badgeLbl sizeToFit];
+    //为了左右两边切圆角留间距
+    CGSize size = [@"#" sizeWithAttributes:@{NSFontAttributeName: self.badgeLbl.font}];
+    float width = self.badgeLbl.bounds.size.width + size.width ;
+    float height = self.badgeLbl.bounds.size.height ;
+    if (width < height) {
+        width = height;
+    }
+    self.badgeLbl.layer.cornerRadius = height / 2;
+    self.badgeLbl.clipsToBounds = YES;
+    CGRect frame = self.badgeLbl.frame;
+    frame.size.width = width;
+    frame.size.height = height;
+    self.badgeLbl.frame = frame;
+    
+}
+
+- (void)sizeToFit {
+    [super sizeToFit];
+    
+}
+
+
 
 @end
+
+
+
+
+
+

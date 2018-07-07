@@ -7,6 +7,7 @@
 //
 
 #import "FirstViewController.h"
+#import "UITabBar+Badge.h"
 
 @interface FirstViewController ()
 
@@ -16,8 +17,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor =  [UIColor colorWithRed:((float)arc4random_uniform(256) / 255.0) green:((float)arc4random_uniform(256) / 255.0) blue:((float)arc4random_uniform(256) / 255.0) alpha:1.0];
+    self.view.backgroundColor =  [UIColor whiteColor];
     self.navigationItem.title = @"首页";
+    [self.tabBarController.tabBar showBadge:@"4" atIndex:0];
+    UIButton *clearBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    clearBtn.frame = CGRectMake(0, 0, 100, 30);
+    clearBtn.center = self.view.center;
+    [clearBtn setTitle:@"清除角标" forState:UIControlStateNormal];
+    [clearBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    clearBtn.backgroundColor = [UIColor grayColor];
+    [clearBtn addTarget:self action:@selector(clearBadge) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:clearBtn];
+}
+
+- (void)clearBadge {
+    [self.tabBarController.tabBar clearBadgeAtIndex:0];
 }
 
 - (void)didReceiveMemoryWarning {

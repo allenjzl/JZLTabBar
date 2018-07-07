@@ -7,6 +7,7 @@
 //
 
 #import "SecondViewController.h"
+#import "UITabBar+Badge.h"
 
 @interface SecondViewController ()
 
@@ -18,6 +19,7 @@
     [super viewDidLoad];
     self.view.backgroundColor =  [UIColor colorWithRed:((float)arc4random_uniform(256) / 255.0) green:((float)arc4random_uniform(256) / 255.0) blue:((float)arc4random_uniform(256) / 255.0) alpha:1.0];
     self.navigationItem.title = @"附近";
+    [self.tabBarController.tabBar showBadge:@"10" badgeColor:[UIColor grayColor] badgeBackgroundColor:[UIColor orangeColor] atIndex:1];
 }
 
 - (void)didReceiveMemoryWarning {

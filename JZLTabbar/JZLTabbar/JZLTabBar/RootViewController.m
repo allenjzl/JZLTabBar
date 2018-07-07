@@ -26,20 +26,21 @@
 
 @implementation RootViewController
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    // 2.删除自动创建的tabBarButton
-    for (UIView *view in [self.tabBar.subviews copy]) {
-        [view removeFromSuperview];
-    }
-    // 把self.wj_tabBar添加到视图上
-    [self.tabBar addSubview:self.JZLTabBar];
-    
-}
+//- (void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//    // 2.删除自动创建的tabBarButton
+//    for (UIView *view in self.tabBar.subviews ) {
+//        [view removeFromSuperview];
+//    }
+//    // 把self.wj_tabBar添加到视图上
+//    [self.tabBar addSubview:self.JZLTabBar];
+//
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self creatChildVC];
+    [self.tabBar showBadge:@"99" badgeColor:[UIColor purpleColor] badgeBackgroundColor:[UIColor greenColor] atIndex:2];
 }
 
 #pragma mark - 创建子控制器
@@ -59,7 +60,8 @@
         [self.viewControllerCountArray addObject:navigationController];
     }
     self.JZLTabBar = [JZLTabBar tabBarWithFrame:self.tabBar.bounds titleArray:titleArray imageArray:imageArray selectedImageArray:selectedImageArray];
-    self.JZLTabBar.delegate = self;
+    self.JZLTabBar.JZLTabBarDelegate = self;
+    [self setValue:self.JZLTabBar forKeyPath:@"tabBar"];
     self.viewControllers = self.viewControllerCountArray;
     self.selectedIndex = 0;
 }
