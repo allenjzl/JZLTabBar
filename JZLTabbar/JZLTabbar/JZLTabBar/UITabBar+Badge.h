@@ -31,7 +31,7 @@
 /**
  清除角标
 
- @param index tabbar
+ @param index tabbar位置
  */
 - (void)clearBadgeAtIndex:(NSInteger)index;
 
